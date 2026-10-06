@@ -1,0 +1,13 @@
+{
+  "name": "france-transparence",
+  "private": true,
+  "description": "Le moteur est en Python (scripts/) ; seul le tableau de bord est un projet npm. Ces scripts ne font que déléguer à dashboard/.",
+  "scripts": {
+    "dev": "npm --prefix dashboard run dev",
+    "build": "npm --prefix dashboard run build",
+    "start": "npm --prefix dashboard run start",
+    "test": "npm --prefix dashboard run test",
+    "typecheck": "npm --prefix dashboard run typecheck",
+    "install-dashboard": "npm --prefix dashboard install"
+  }
+}

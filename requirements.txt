@@ -1,0 +1,6 @@
+# Le pilotage du navigateur, seule dependance du pipeline : l'agent ouvre les
+# sites de collectivites avec Playwright, y compris ceux dont la navigation est
+# rendue en JavaScript et qu'aucune requete HTTP simple n'atteint.
+#
+# Apres l'installation : python -m playwright install chromium
+playwright==1.63.0

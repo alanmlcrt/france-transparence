@@ -1,0 +1,262 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Dub — tableau de bord givré sur papier de riz. DESIGN.md est la source de
+   vérité : surfaces blanches, structure par bordures, densité compacte et un
+   seul bleu électrique pour guider l'action. */
+@theme {
+  --color-canvas-white: #ffffff;
+  --color-paper-mist: #f5f5f5;
+  --color-ash: #e5e5e5;
+  --color-smoke: #d4d4d4;
+  --color-pebble: #c8c8c8;
+  --color-midnight-ink: #0a0a0a;
+  --color-charcoal: #171717;
+  --color-graphite: #262626;
+  --color-slate: #404040;
+  --color-steel: #525252;
+  --color-fog: #737373;
+  --color-silver: #a3a3a3;
+  --color-electric-blue: #2563eb;
+  --color-deep-sapphire: #1e40af;
+  --color-soft-blue: #dbeafe;
+  --color-soft-mint: #dcfce7;
+  --color-vivid-green: #16a34a;
+  --color-soft-tangerine: #fff7ed;
+  --color-tangerine: #c2410c;
+  --color-lavender: #7c3aed;
+
+  /* Alias sémantiques conservés pour les vues métier existantes. */
+  --color-paper-white: #ffffff;
+  --color-mist-gray: #f5f5f5;
+  --color-fog-white: #fafafa;
+  --color-hairline: #e5e5e5;
+  --color-ink-black: #171717;
+  --color-slate-gray: #525252;
+  --color-ash-gray: #737373;
+  --color-smoke-gray: #a3a3a3;
+  --color-blush-peach: #fff7ed;
+  --color-sienna-brown: #c2410c;
+
+  --font-display: var(--font-satoshi), Inter, ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", "IBM Plex Mono",
+    ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 1.5;
+  --text-body: 14px;
+  --text-body--line-height: 1.43;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 1.5;
+  --text-body-xl: 18px;
+  --text-body-xl--line-height: 1.56;
+  --text-subheading: 20px;
+  --text-subheading--line-height: 1.4;
+  --text-heading-sm: 24px;
+  --text-heading-sm--line-height: 1.33;
+  --text-heading: 30px;
+  --text-heading--line-height: 1.38;
+  --text-heading-lg: 36px;
+  --text-heading-lg--line-height: 1.11;
+  --text-display: 48px;
+  --text-display--line-height: 1;
+
+  --radius-inputs: 6px;
+  --radius-buttons: 8px;
+  --radius-cards: 12px;
+  --radius-images: 12px;
+  --radius-smallcards: 12px;
+  --radius-elevatedcards: 16px;
+  --radius-pill: 9999px;
+
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-artifact: 0 0 0 4px rgba(0, 0, 0, 0.08);
+  --shadow-popover: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --container-page: 1200px;
+}
+
+/* Jeu de variables shadcn/ObsidianUI, retinté sur nos propres tokens (au-dessus)
+   plutôt que laissé aux gris oklch par défaut — un bouton shadcn doit sortir
+   de la même palette que le reste du site, pas d'un thème générique à part.
+   Pas de sidebar ni de chart : aucun composant de ce type n'est installé, les
+   ajouter maintenant serait de la config pour une valeur qui ne sert pas. */
+:root {
+  color-scheme: light;
+  --background: var(--color-canvas-white);
+  --foreground: var(--color-charcoal);
+  --card: var(--color-canvas-white);
+  --card-foreground: var(--color-charcoal);
+  --popover: var(--color-canvas-white);
+  --popover-foreground: var(--color-charcoal);
+  --primary: var(--color-electric-blue);
+  --primary-foreground: var(--color-canvas-white);
+  --secondary: var(--color-paper-mist);
+  --secondary-foreground: var(--color-charcoal);
+  --muted: var(--color-paper-mist);
+  --muted-foreground: var(--color-fog);
+  --accent: var(--color-paper-mist);
+  --accent-foreground: var(--color-charcoal);
+  --destructive: var(--color-tangerine);
+  --border: var(--color-ash);
+  --input: var(--color-ash);
+  --ring: var(--color-electric-blue);
+  --radius: var(--radius-buttons);
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--color-canvas-white);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(37, 99, 235, 0.12);
+}
+
+a,
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  scroll-margin-top: 80px;
+}
+
+p { text-wrap: pretty; }
+code {
+  font-family: var(--font-mono);
+  overflow-wrap: anywhere;
+}
+table { font-variant-numeric: tabular-nums; }
+table { font-size: 14px; }
+th:first-child,
+td:first-child { padding-left: 1rem; }
+th:last-child,
+td:last-child { padding-right: 1rem; }
+thead { background: var(--color-paper-mist); }
+tbody tr { transition: background-color 150ms ease; }
+tbody tr:hover { background: #fafafa; }
+
+:focus-visible {
+  outline: 3px solid var(--color-electric-blue);
+  outline-offset: 2px;
+}
+
+/* Le champ de la palette de commande (Cmd/Ctrl+K) est nu — sans lui, le
+   contour de 3px ci-dessus dessine un pavé bleu dans une barre de recherche
+   qui n'en a pas besoin : le focus s'y voit déjà au curseur qui clignote. Un
+   simple changement de couleur de la bordure basse suffit. */
+[data-slot="command-input"]:focus-visible {
+  outline: none;
+}
+[data-slot="command-input-wrapper"]:has([data-slot="command-input"]:focus-visible) {
+  border-color: var(--color-electric-blue);
+}
+
+.controle-filtre {
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid var(--color-ash);
+  border-radius: var(--radius-inputs);
+  background: var(--color-canvas-white);
+  padding: 0 12px;
+  color: var(--color-charcoal);
+  font: inherit;
+  font-size: 14px;
+}
+
+.controle-filtre::placeholder { color: var(--color-silver); }
+.controle-filtre:hover { border-color: var(--color-smoke); }
+
+::selection {
+  background: var(--color-soft-blue);
+  color: var(--color-deep-sapphire);
+}
+
+/* Navigation : le contenu entrant glisse légèrement, le titre de la
+   collectivité reste en place d'une vue à l'autre. transform et opacity
+   seulement ; désactivé sous prefers-reduced-motion. */
+::view-transition-old(.page) { animation: 140ms ease-in both page-sortie; }
+::view-transition-new(.page) { animation: 280ms cubic-bezier(0.16, 1, 0.3, 1) both page-entree; }
+@keyframes page-sortie { to { opacity: 0; transform: translateY(-4px); } }
+@keyframes page-entree { from { opacity: 0; transform: translateY(10px); } }
+
+/* Lignes de tableau qui apparaissent : dépli d'un groupe de date, tri
+   appliqué. Décalées légèrement par ligne (voir `delaiMs`) pour une entrée en
+   cascade plutôt qu'un bloc qui saute d'un coup. transform/opacity
+   seulement ; neutralisé sous prefers-reduced-motion avec le reste plus bas. */
+@keyframes ligne-entree { from { opacity: 0; transform: translateY(-4px); } }
+.ligne-entree { animation: 180ms ease-out both ligne-entree; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  nav,
+  .sans-impression { display: none !important; }
+  [data-source]::after {
+    content: " (" attr(data-source) ", exercice " attr(data-millesime) ")";
+    font-size: 11px;
+    color: #555;
+  }
+}
+
+@theme inline {
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Le reste du fichier (body, focus-visible, tableau...) définit déjà le
+   fond, le texte et les bordures par défaut : pas de calque shadcn en plus
+   pour redire la même chose avec d'autres variables. */
+* { border-color: var(--color-border, currentColor); outline-color: color-mix(in oklab, var(--color-ring) 50%, transparent); }

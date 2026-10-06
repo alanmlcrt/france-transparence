@@ -1,0 +1,56 @@
+__pycache__/
+*.pyc
+
+# Tout ce que le moteur ecrit vit dans data/ et n'est pas versionne : la base
+# collectee, les PDF telecharges, les caches de texte. Le depot se clone vide
+# et se remplit collectivite par collectivite, a la demande.
+#
+# `data/*` (et non `data/`) est volontaire : ca laisse la possibilite de
+# re-inclure un fichier precis juste en dessous.
+data/*
+!data/portails.yaml
+
+# La base elle-meme, redite explicitement : c'est le fichier qu'on est le plus
+# tente d'ajouter par reflexe, et il porte les documents d'une collectivite
+# reelle. Il se reconstruit entierement en relancant la collecte.
+data/deliberations.db
+data/deliberations.db-wal
+data/deliberations.db-shm
+
+# Skills tiers (design, UI, navigateur...), installes et reinstallables : ils
+# pesent plusieurs Mo pour des centaines de fichiers, sont dupliques entre
+# .agents/ et .claude/, et aucun n'intervient dans la collecte ni dans le
+# tableau de bord. Les versionner noierait le depot dans du code qui n'est pas
+# le sien.
+#
+# Seule exception : `france-transparence`, le skill du projet — celui qui conduit
+# le pipeline (collecte, telechargement, lecture) et alimente le site. Ses deux
+# copies sont versionnees et identiques (verifie par base.py --selftest) :
+# .claude/ pour Claude Code, .agents/ pour Codex et les autres CLI.
+.agents/skills/*
+.claude/skills/*
+!.agents/skills/france-transparence/
+!.claude/skills/france-transparence/
+
+# Reglages locaux de Claude Code (machine de l'utilisateur, jamais partages)
+.claude/settings.local.json
+
+# Cache OCR local
+*.ocr.txt
+
+# Fichiers de travail laisses par un agent (extractions de PDF, scripts jetables).
+# Tout est reproductible depuis les PDF : rien a versionner.
+scratch_*
+scratchpad_*
+scratchpad_tmp/
+
+# Secrets
+.env
+.env.*
+
+# Tableau de bord Next.js : dependances installees et sorties de build
+dashboard/node_modules/
+dashboard/.next/
+dashboard/next-env.d.ts
+dashboard/tsconfig.tsbuildinfo
+node_modules/

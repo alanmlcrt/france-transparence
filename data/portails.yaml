@@ -1,0 +1,166 @@
+# Ou chaque collectivite publie ses actes, tel que l'agent l'a trouve et
+# verifie. Ce fichier part vide et se remplit collectivite par collectivite :
+# une recherche reussie s'ecrit ici pour que la suivante n'ait pas a la refaire.
+#
+# Une entree n'est ecrite qu'apres avoir ouvert l'URL et y avoir vu des actes.
+# Une adresse supposee est une source qui n'existe pas.
+#
+# collectivites:
+#   "<code INSEE ou SIREN>":
+#     nom: "<Nom officiel>"
+#     type: portail | site      # portail = actes dates et numerotes ; site = PDF seuls
+#     url: "<adresse de la page qui liste les actes>"
+#     verifie_le: "AAAA-MM-JJ"
+#     notes: "ce qu'on y trouve, et ce qu'on n'y trouve pas"
+#     collecteur: data/collecteurs/<code>.py   # ou vit le collecteur dedie
+#     recette:                  # a defaut de collecteur, pour une page simple
+#       rendu: http             #   ou « navigateur » si la page est en JS
+#       dans: "#contenu"        #   facultatif, restreint a un conteneur
+#       attendu: 17             #   actes vus au dernier passage verifie
+#
+# `collecteur` est indicatif : scripts/collecter.py cherche de toute facon
+# data/collecteurs/<code>.py. Le noter ici dit au lecteur humain que cette
+# collectivite en a un, alors que le fichier lui-meme n'est pas versionne.
+
+collectivites:
+  "13083":
+    nom: "Rognonas"
+    type: site
+    url: "https://www.rognonas.fr/comptes-rendus-conseils-municipaux"
+    verifie_le: "2026-09-21"
+    epci_siren: "200035087"
+    epci_nom: "CA Terre de Provence"
+    notes: >
+      Procès-verbaux et listes de délibérations, une paire par séance, avec la
+      date lisible dans le nom du fichier. Aucun numéro d'acte, aucun service
+      ni rapporteur. Les liens PDF pointent vers un CDN et portent une
+      signature qui expire : la copie archivée est la seule qui dure.
+      La page d'accueil du site liste huit rubriques qui ressemblent à des
+      délibérations ; une seule en est.
+    collecteur: data/collecteurs/13083.py
+  "75056":
+    nom: "Paris"
+    type: site
+    url: "https://www.paris.fr/pages/comptes-rendus-et-debats-et-deliberations-du-conseil-224"
+    verifie_le: "2026-09-21"
+    epci_siren: "200054781"
+    epci_nom: "Métropole du Grand Paris"
+    notes: >
+      Comptes rendus sommaires et Bulletins officiels des délibérations, un par
+      séance, avec la date en toutes lettres dans l'intitulé du lien. Les noms
+      de fichiers sont des hachages : seule la section de la page dit de quel
+      document il s'agit. Les débats intégraux et les questions écrites sont
+      publiés au même endroit et volontairement écartés. Le corpus complet des
+      délibérations (2 166 pour 2026) vit sur a06-v7.apps.paris.fr, non
+      collecté : trop volumineux pour être lu, et sans intérêt en archive.
+    collecteur: data/collecteurs/75056.py
+  "62119":
+    nom: "Béthune"
+    type: site
+    url: "https://www.bethune.fr/le-conseil-municipal-de-bethune/les-conseils-municipaux/les-conseils-municipaux-de-2026-1035.html"
+    verifie_le: "2026-09-22"
+    epci_siren: "200072460"
+    epci_nom: "CA de Béthune-Bruay, Artois-Lys Romane"
+    notes: >
+      Page annuelle (une URL par annee, identifiant TYPO3 different a chaque
+      fois) groupant les seances : convocation, liste des deliberations
+      adoptees, parfois une communication budgetaire, et le proces-verbal
+      quand il est publie -- avec plusieurs mois de retard (PV du 30 juin
+      2026 absent au 22 septembre). Aucun acte individuel ni numero : seule
+      la liste des deliberations adoptees les recapitule par seance, sans
+      texte ni montant detaille -- pour le detail d'un point, il faudra le PV.
+    collecteur: data/collecteurs/62119.py
+  "84035":
+    nom: "Cavaillon"
+    type: site
+    url: "https://cavaillon.fr/comptes-rendus.html"
+    verifie_le: "2026-09-21"
+    epci_siren: "200040442"
+    epci_nom: "CA Luberon Monts de Vaucluse"
+    notes: >
+      Attention, l'annuaire du service public donne www.cavaillon.com, dont le
+      certificat TLS est émis pour cavaillon.fr : toute requête HTTPS vérifiée
+      échoue. Utiliser cavaillon.fr.
+      Comptes rendus de séance de 2018 à mai 2022, 30 documents, corpus clos :
+      le décret n°2021-1311 a supprimé le compte rendu au 1er juillet 2022.
+      Les actes postérieurs sont publiés dans une application d'affichage
+      dématérialisé (cavaillon.fr/documents.html, iframe /ADTM/index.html), en
+      JavaScript, sans lien ni identifiant exploitable : NON COLLECTÉS. Ils y
+      sont pourtant individuels, numérotés et datés — à reprendre si le
+      prestataire expose un jour une URL stable.
+    collecteur: data/collecteurs/84035.py
+  "59350":
+    nom: "Lille"
+    type: portail
+    url: "https://deliberations.mairie-lille.fr/webdelib/"
+    verifie_le: "2026-09-24"
+    epci_siren: "200093201"
+    epci_nom: "Métropole Européenne de Lille"
+    notes: >
+      Portail webdelib : actes numérotés (26/216) et datés de leur séance. Pas
+      de liste, seulement un moteur de recherche ; le servlet de résultats
+      répond aussi en GET par date de séance, sans formulaire. Service et
+      rapporteur seulement sur la fiche détail.
+    collecteur: data/collecteurs/59350.py
+  "200093201":
+    nom: "Métropole Européenne de Lille"
+    type: portail
+    url: "https://www.lillemetropole.fr/deliberations"
+    verifie_le: "2026-09-24"
+    notes: >
+      Délibérations du Conseil et du Bureau depuis 2016, dix par page, avec
+      numéro (26-C-0107), date et titre ; PDF sur diffuweb.lillemetropole.fr.
+      Annexes non publiées (sur commande par formulaire). Collecte bornée aux
+      trois premières pages.
+    collecteur: data/collecteurs/200093201.py
+  "59117":
+    nom: "Bugnicourt"
+    type: site
+    url: "https://www.bugnicourt.fr/mairie/les-comptes-rendus-des-conseils"
+    verifie_le: "2026-09-24"
+    epci_siren: "200044618"
+    epci_nom: "CA Douaisis Agglo"
+    notes: >
+      Comptes rendus de conseil depuis 2021, liens intitulés « Consulter » ;
+      la date est dans le nom du fichier. Les bulletins « Bugnicourt Infos »
+      sont sur une autre page et ne sont pas des actes.
+    collecteur: data/collecteurs/59117.py
+  "62350":
+    nom: "Fouquières-lès-Béthune"
+    type: site
+    url: "https://www.fouquieres-lez-bethune.fr/comptes-rendus"
+    verifie_le: "2026-09-24"
+    epci_siren: "200072460"
+    epci_nom: "CA de Béthune-Bruay, Artois-Lys Romane"
+    notes: >
+      Procès-verbaux et comptes rendus depuis 2021, liens « Consulter ». Le nom
+      de fichier colle un horodatage de mise en ligne derrière la date de
+      séance : voir le collecteur.
+    collecteur: data/collecteurs/62350.py
+  "79114":
+    nom: "Exireuil"
+    type: site
+    url: "https://www.exireuil.fr/pages/publications/les-deliberations-du-conseil-municipal.html"
+    verifie_le: "2026-10-02"
+    epci_siren: "200041994"
+    epci_nom: "CC Haut Val de Sèvre"
+    notes: >
+      Une page unique : procès-verbal et liste des délibérations de chaque
+      séance depuis 2021 (plus les convocations, écartées par le collecteur).
+      Anciens liens sur exireuil.com, même commune. Aucune délibération
+      individuelle : la liste affichée et le PV en tiennent lieu.
+    collecteur: data/collecteurs/79114.py
+  "71306":
+    nom: "Montceau-les-Mines"
+    type: site
+    url: "https://www.saas-legalview.fr/public/legalview/mairie-de-montceau-les-mines"
+    verifie_le: "2026-10-02"
+    epci_siren: "247100290"
+    epci_nom: "CU Le Creusot Montceau-les-Mines"
+    notes: >
+      Affichage légal LegalView, lié depuis montceaulesmines.fr (« Publications
+      légales »). Thème « Conseil Municipal » : un sous-thème par séance depuis
+      2022, comptes rendus, procès-verbaux, listes des délibérations, quelques
+      délibérations isolées et pièces jointes. Les décisions du maire (thème
+      « Décisions ») et les arrêtés ne sont pas collectés.
+    collecteur: data/collecteurs/71306.py
