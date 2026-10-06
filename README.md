@@ -1,5 +1,7 @@
 # France Transparence
 
+Code source : [github.com/alanmlcrt/france-transparence](https://github.com/alanmlcrt/france-transparence/tree/main)
+
 Votre conseil municipal vote toute l'année. Il décide de subventions, de marchés
 publics, de travaux, d'embauches, de tarifs. Tout est publié : les actes signés
 sont en ligne, en PDF, sur le site de la mairie ou sur un portail dédié.
@@ -65,7 +67,7 @@ l'agent reprend la main pour le réécrire.
 ## Installation
 
 ```bash
-git clone <url> "France Transparence"
+git clone https://github.com/alanmlcrt/france-transparence.git "France Transparence"
 cd "France Transparence"
 python -m pip install -r requirements.txt   # Playwright
 python -m playwright install chromium       # le navigateur lui-même
@@ -87,10 +89,12 @@ lecture ne se font pas à la main : c'est l'agent qui les fait.
 
 ## Première utilisation
 
-Le dépôt arrive vide. Pas de base, aucune collectivité, `data/portails.yaml`
-sans entrée : le tableau de bord ouvert tout de suite affiche un écran qui
-explique quoi faire, pas une erreur. C'est normal, l'outil ne présume pas de la
-commune qui vous intéresse.
+Le dépôt arrive sans données : pas de base, aucun acte téléchargé. Le tableau
+de bord ouvert tout de suite affiche un écran qui explique quoi faire, pas une
+erreur. C'est normal, l'outil ne présume pas de la commune qui vous intéresse.
+Seul `data/portails.yaml` arrive rempli : les adresses déjà vérifiées par
+d'autres utilisateurs, pour que la recherche de ces collectivités ne soit pas à
+refaire.
 
 Tout part de votre première demande :
 
